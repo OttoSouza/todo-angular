@@ -1,0 +1,32 @@
+<div class="todos">
+  <form [formGroup]="formulario">
+    <input
+      type="text"
+      name="inputTodo"
+      placeholder="Enter todo..."
+      class="todo-input"
+      formControlName="content"
+    />
+    <ng-container *ngIf="formulario.controls['content'].touched">
+      <span *ngIf="formulario.controls['content'].errors?.['required']"
+        >Campo Obrigatorio</span
+      >
+    </ng-container>
+    <button
+      type="submit"
+      class="{{ formulario.valid ? 'todo-submit' : 'todo-submit-disabled' }}"
+      (click)="addTodo()"
+      [disabled]="!formulario.valid"
+    >
+      Add Todo
+    </button>
+  </form>
+  <div
+    *ngFor="let todo of todos; let i = index"
+    class="todo {{ todo.completed ? 'done' : '' }}"
+  >
+    <div class="id">{{ i + 1 }}</div>
+    <div class="content" (click)="toggleDone(i)">{{ todo.content }}</div>
+    <button class="delete" (click)="delete(i)">Remove</button>
+  </div>
+</div>
